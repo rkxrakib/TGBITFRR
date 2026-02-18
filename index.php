@@ -1,0 +1,47 @@
+<?php include 'config.php'; ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Syncing FoxiGrow...</title>
+    <style>
+        body { background: #0d0d12; color: #fff; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; font-family: sans-serif; }
+        .loader { width: 45px; height: 45px; border: 4px solid #1c1c24; border-top: 4px solid #ff7622; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="loader"></div>
+    <p style="margin-top:20px; font-weight:bold; letter-spacing:1px; color:#ff7622;">FOXIGROW LOADING...</p>
+
+    <script>
+        firebase.initializeApp(<?php echo $firebaseConfig; ?>);
+        const db = firebase.database();
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+
+        async function init() {
+            const user = tg.initDataUnsafe.user || { id: "000", first_name: "Guest" };
+            const uRef = db.ref(`users/${user.id}`);
+            const snap = await uRef.once('value');
+
+            if(!snap.exists()) {
+                const refId = tg.initDataUnsafe.start_param;
+                await uRef.set({
+                    id: user.id, firstName: user.first_name, 
+                    balance: 0.00, coins: 0, completed: 0, 
+                    photoUrl: user.photo_url || ""
+                });
+                if(refId && refId != user.id) {
+                    db.ref(`users/${refId}/balance`).set(firebase.database.ServerValue.increment(0.05));
+                }
+            }
+            window.location.href = "home.php";
+        }
+        init();
+    </script>
+</body>
+</html>
