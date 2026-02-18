@@ -140,7 +140,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
     
     <script>
-        const firebaseConfig = {
+        // --- এই অংশটুকু আপনার admin.html এর নিচের দিকে খুজে বের করুন এবং পরিবর্তন করুন ---
+const firebaseConfig = {
   apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y",
   authDomain: "fynora-81313.firebaseapp.com",
   databaseURL: "https://fynora-81313-default-rtdb.firebaseio.com",
@@ -149,7 +150,8 @@
   messagingSenderId: "593306264446",
   appId: "1:593306264446:web:da476d4c77ae4ede6b492f",
   measurementId: "G-BX0FWR2YMT"
-}; 
+};
+// -------------------------------------------------------------------------
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         let userList = [];
