@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+</head>
+<body>
+    <div style="padding: 25px 20px; text-align: center;">
+        <h3 style="color:var(--acc); letter-spacing:1px; margin-bottom:25px;">LEADERBOARD</h3>
+        <div id="rank-area"></div>
+    </div>
+
+    <nav class="nav">
+        <a href="home.html" class="nav-item"><i class="fas fa-home"></i>Home</a>
+        <a href="home.html" class="nav-item"><i class="fas fa-bullseye"></i>Tasks</a>
+        <a href="rank.html" class="nav-item active"><i class="fas fa-trophy"></i>Rank</a>
+        <a href="activity.html" class="nav-item"><i class="fas fa-history"></i>Activity</a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i>Profile</a>
+    </nav>
+
+    <script>
+        const fakeUsers = [
+            {n: "ay***i", v: "200.13", i: "https://i.pravatar.cc/100?u=1"},
+            {n: "Be***e", v: "68.56", i: "https://i.pravatar.cc/100?u=2"},
+            {n: "In***1", v: "64.13", i: "https://i.pravatar.cc/100?u=3"},
+            {n: "Sh***e", v: "62.50", i: "https://i.pravatar.cc/100?u=4"},
+            {n: "Ma***o", v: "55.20", i: "https://i.pravatar.cc/100?u=5"},
+            {n: "No***h", v: "48.90", i: "https://i.pravatar.cc/100?u=6"},
+            {n: "Ki***g", v: "42.10", i: "https://i.pravatar.cc/100?u=7"},
+            {n: "Lu***s", v: "38.50", i: "https://i.pravatar.cc/100?u=8"},
+            {n: "Ro***y", v: "34.20", i: "https://i.pravatar.cc/100?u=9"},
+            {n: "Za***n", v: "30.00", i: "https://i.pravatar.cc/100?u=10"}
+        ];
+
+        let html = '';
+        fakeUsers.forEach((u, i) => {
+            html += `<div class="item-card">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <span style="color:var(--dim); width:20px;">${i+1}</span>
+                    <img src="${u.i}" style="width:38px; height:38px; border-radius:50%;">
+                    <b>${u.n}</b>
+                </div>
+                <b style="color:var(--acc);">${u.v} USD</b>
+            </div>`;
+        });
+        document.getElementById('rank-area').innerHTML = html;
+    </script>
+</body>
+</html>
