@@ -1,0 +1,12 @@
+:root { --bg: #0d0d12; --surf: #1c1c24; --acc: #ffb400; --acc-sec: #ff7622; --text: #ffffff; --dim: #a1a1aa; }
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+body { background-color: var(--bg); color: var(--text); padding-bottom: 90px; }
+.header { display: flex; align-items: center; justify-content: space-between; padding: 20px; }
+.avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--acc-sec); }
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; padding: 0 20px; margin-bottom: 20px; }
+.stat-card { background: var(--surf); padding: 15px 5px; border-radius: 20px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+.stat-card h2 { font-size: 1.1rem; font-weight: 800; color: #fff; }
+.nav { position: fixed; bottom: 0; left: 0; right: 0; background: #121218; display: flex; justify-content: space-around; padding: 15px 5px; border-top: 1px solid #222; }
+.nav-item { color: var(--dim); text-align: center; font-size: 0.6rem; text-transform: uppercase; text-decoration: none; flex: 1; }
+.nav-item.active { color: var(--acc-sec); }
+.nav-item i { font-size: 1.3rem; display: block; margin-bottom: 5px; }
