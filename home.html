@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <div class="header">
+        <div style="display:flex; align-items:center; gap:12px;">
+            <img id="u-img" src="https://via.placeholder.com/65" class="avatar">
+            <div class="u-info"><h3 id="u-name">Guest</h3><div class="lv-tag">LV.3 Newbie</div></div>
+        </div>
+        <i class="fas fa-globe" style="color:var(--acc-sec); font-size:1.4rem;"></i>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="icon-c"><i class="fab fa-ethereum"></i></div>
+            <h2 id="u-usd">0.00</h2><p>USDT</p>
+        </div>
+        <div class="stat-card">
+            <div class="icon-c" style="color:var(--acc);"><i class="fas fa-coins"></i></div>
+            <h2 id="u-coin">0</h2><p>FG Coin</p>
+        </div>
+        <div class="stat-card">
+            <div class="icon-c" style="color:#2ecc71;"><i class="fas fa-check-double"></i></div>
+            <h2 id="u-done">0</h2><p>Completed</p>
+        </div>
+    </div>
+
+    <div style="padding:0 15px;">
+        <h4 style="color:var(--acc-sec); font-size:0.8rem; margin-bottom:15px; letter-spacing:1px;"><i class="fas fa-fire"></i> HOT TASKS</h4>
+        <div id="task-area"></div>
+    </div>
+
+    <nav class="nav">
+        <a href="home.html" class="nav-item active"><i class="fas fa-home"></i>Home</a>
+        <a href="home.html" class="nav-item"><i class="fas fa-bullseye"></i>Tasks</a>
+        <a href="rank.html" class="nav-item"><i class="fas fa-trophy"></i>Rank</a>
+        <a href="activity.html" class="nav-item"><i class="fas fa-history"></i>Activity</a>
+        <a href="profile.html" class="nav-item"><i class="fas fa-user"></i>Profile</a>
+    </nav>
+
+    <script>
+        const firebaseConfig = { apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y", databaseURL: "https://fynora-81313-default-rtdb.firebaseio.com" };
+        firebase.initializeApp(firebaseConfig);
+        const tg = window.Telegram.WebApp; tg.ready();
+        const uid = (tg.initDataUnsafe.user || {id:"000"}).id;
+
+        firebase.database().ref('users/' + uid).on('value', s => {
+            const d = s.val() || {};
+            document.getElementById('u-usd').innerText = (d.balance || 0).toFixed(2);
+            document.getElementById('u-coin').innerText = (d.coins || 0);
+            document.getElementById('u-done').innerText = d.completed || 0;
+            document.getElementById('u-name').innerText = d.firstName;
+            if(d.photoUrl) document.getElementById('u-img').src = d.photoUrl;
+        });
+
+        firebase.database().ref('config/webTasks').on('value', s => {
+            const area = document.getElementById('task-area'); area.innerHTML = '';
+            s.forEach(c => {
+                const t = c.val();
+                area.innerHTML += `<div class="item-card">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <img src="${t.icon}" style="width:40px; height:40px; border-radius:10px;">
+                        <div><h4>${t.name}</h4><span style="color:var(--acc);">+${t.reward} USDT</span></div>
+                    </div>
+                    <button onclick="window.open('${t.url}')" class="item-btn">START</button>
+                </div>`;
+            });
+        });
+    </script>
+</body>
+</html>
