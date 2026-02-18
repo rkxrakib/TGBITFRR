@@ -1,4 +1,3 @@
-<?php include 'config.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +17,16 @@
     <p style="margin-top:20px; font-weight:bold; letter-spacing:1px; color:#ff7622;">FOXIGROW LOADING...</p>
 
     <script>
-        firebase.initializeApp(<?php echo $firebaseConfig; ?>);
+        const firebaseConfig = {
+            apiKey: "AIzaSyDvtZJhIN850tU7cETuiqRyCyjCBdlFt-Y",
+            authDomain: "fynora-81313.firebaseapp.com",
+            databaseURL: "https://fynora-81313-default-rtdb.firebaseio.com",
+            projectId: "fynora-81313",
+            storageBucket: "fynora-81313.firebasestorage.app",
+            messagingSenderId: "593306264446",
+            appId: "1:593306264446:web:da476d4c77ae4ede6b492f"
+        };
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         const tg = window.Telegram.WebApp;
         tg.ready();
@@ -39,7 +47,7 @@
                     db.ref(`users/${refId}/balance`).set(firebase.database.ServerValue.increment(0.05));
                 }
             }
-            window.location.href = "home.php";
+            window.location.href = "home.html";
         }
         init();
     </script>
